@@ -4,7 +4,7 @@
   "description": "Streaming chunks based on delimiter",
   "main": "delimiter-stream.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha"
+    "test": "make test"
   },
   "repository": {
     "type": "git",
