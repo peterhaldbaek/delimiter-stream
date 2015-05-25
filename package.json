@@ -1,0 +1,32 @@
+{
+  "name": "delimiter-stream",
+  "version": "0.0.1",
+  "description": "Streaming chunks based on delimiter",
+  "main": "delimiter-stream.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/peterhaldbaek/delimiter-stream.git"
+  },
+  "keywords": [
+    "stream",
+    "transform",
+    "delimiter",
+    "linereader",
+    "linestream",
+    "delimiterstream"
+  ],
+  "author": "Peter Haldbæk <peter.haldbaek@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/peterhaldbaek/delimiter-stream/issues"
+  },
+  "homepage": "https://github.com/peterhaldbaek/delimiter-stream",
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "lodash": "^3.9.1",
+    "mocha": "^2.2.5"
+  }
+}
