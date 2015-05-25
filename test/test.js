@@ -145,7 +145,9 @@ function createReadStream(text) {
 
 function createHugeFile() {
   var filename = path.join(__dirname, 'tmp.txt');
-  fs.unlinkSync(filename);
+  if (fs.existsSync(filename)) {
+    fs.unlinkSync(filename);
+  }
   // Create huge temporary file
   var delimiter = '\n';
   for (var i = 1; i < 15000; i++) {
