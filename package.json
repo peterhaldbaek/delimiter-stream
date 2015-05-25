@@ -1,6 +1,6 @@
 {
   "name": "delimiter-stream",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Streaming chunks based on delimiter",
   "main": "delimiter-stream.js",
   "scripts": {
