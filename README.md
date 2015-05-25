@@ -13,11 +13,12 @@ $ npm install delimiter-stream
 
 ## Usage
 
+Use the stream to split chunks into chunks separated by the delimter either by
+using the `data` event or by piping the stream into other streams. Handy if you
+want to analyze a file stream line by line.
+
 The stream is implemented as a Transform stream
 (<https://nodejs.org/api/stream.html#stream_class_stream_transform_1>).
-
-Use the stream to split chunks into chunks separated by the delimter either by
-using the `data` event or by piping the stream into other streams.
 
 The stream constructor accepts these parameters
 
@@ -28,7 +29,7 @@ The stream constructor accepts these parameters
 ### Using the `data` event
 
 ```javascript
-var DelimiterStream = require('../delimiter-stream');
+var DelimiterStream = require('delimiter-stream');
 var decoder = new require('string_decoder').StringDecoder('utf8');
 
 var delimiterstream = new DelimiterStream({
@@ -55,7 +56,7 @@ three
 
 ```javascript
 var fs = require('fs');
-var DelimiterStream = require('../delimiter-stream');
+var DelimiterStream = require('delimiter-stream');
 var decoder = new require('string_decoder').StringDecoder('utf8');
 
 var linestream = new DelimiterStream();
