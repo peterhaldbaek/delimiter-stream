@@ -66,7 +66,10 @@ describe('delimiter-stream', function() {
     var expectedOutcome = [
       'first',
       'second',
-      'third'
+      'third',
+      'fourth',
+      'fifth',
+      'sixth'
     ];
 
     delimiterstream.on('data', function(chunk) {
@@ -81,6 +84,10 @@ describe('delimiter-stream', function() {
     });
 
     delimiterstream.write('first|second|third');
+    delimiterstream.write('|fourt');
+    delimiterstream.write('h|fifth|');
+    delimiterstream.write('six');
+    delimiterstream.write('th');
     delimiterstream.end();
   });
 

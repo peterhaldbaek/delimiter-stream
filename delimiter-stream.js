@@ -23,7 +23,7 @@ DelimiterStream.prototype._transform = function(chunk, encoding, done) {
   var s = chunk.toString(this._encoding);
 
   var lines = s.split(this._delimiter);
-  if (lines.length > 0) {
+  if (lines.length > 1) {
     lines.forEach(function(l, index) {
       if (index === 0) {
         // First part, append it to the stub and push it
