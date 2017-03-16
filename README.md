@@ -43,6 +43,7 @@ delimiterstream.write('one|tw');
 delimiterstream.write('o|three');
 delimiterstream.write('|four|fiv');
 delimiterstream.write('e');
+delimiterstream.end();
 ```
 
 This results in
