@@ -5,7 +5,6 @@ const path = require('path');
 const Readable = require('stream').Readable;
 const Writable = require('stream').Writable;
 const StringDecoder = require('string_decoder').StringDecoder;
-const _ = require('lodash');
 const expect = require('chai').expect;
 
 const DelimiterStream = require('../delimiter-stream');
@@ -119,20 +118,22 @@ describe('delimiter-stream', function () {
   });
 
   it('should support streaming huge files', function (done) {
-    const self = this;
+    this.timeout(30000);
+
     const encoding = 'utf8';
     const delimiter = '▌▌▌▌';
     const filename = createHugeFile(delimiter, encoding);
     const linestream = new DelimiterStream({delimiter, encoding});
 
-    const input = fs.createReadStream(filename);
+    const input = fs.createReadStream(filename, {encoding});
     const output = new Writable();
     let index = 1;
 
     output._write = function (chunk, encoding, callback) {
-      const actual = self.decoder.write(chunk);
-      const expected = _.padRight('', index, index++);
-      expect(actual).to.equal(expected);
+      const actual = JSON.parse(chunk);
+      const expected = {idx: index++};
+
+      expect(actual.idx).to.equal(expected.idx);
       callback();
     };
 
@@ -144,7 +145,55 @@ describe('delimiter-stream', function () {
         .pipe(linestream)
         .pipe(output);
   });
+
+  it('should be able to deal with irregularly transmitted messages with multi-character delimiters', function (done) {
+    this.timeout(10000);
+
+    const encoding = 'utf8';
+    const delimiter = '▌▌▌▌';
+    const linestream = new DelimiterStream({delimiter, encoding});
+
+    const filename = createHugeFile(delimiter, encoding, 2000);
+    let fileContent = Buffer.from(fs.readFileSync(filename, {encoding}), encoding);
+
+    const output = new Writable();
+    const input = new Readable();
+    let chunkSize = 50;
+    let index = 1;
+
+    output._write = function (chunk, encoding, callback) {
+      const actual = JSON.parse(chunk);
+      const expected = {idx: index++};
+
+      expect(actual.idx).to.equal(expected.idx);
+      callback();
+    };
+
+    output.on('finish', function () {
+      done();
+    });
+
+    input
+        .pipe(linestream)
+        .pipe(output);
+
+    transmitFileChunked(fileContent, chunkSize, input);
+  });
 });
+
+function transmitFileChunked (fileContent, chunkSize, input) {
+  if (!fileContent || !fileContent.length) {
+    input.push(null);
+    return null;
+  }
+
+  const chunk = fileContent.slice(0, chunkSize);
+
+  input.push(chunk);
+  fileContent = fileContent.slice(chunkSize);
+
+  return transmitFileChunked(fileContent, chunkSize, input);
+}
 
 function createReadStream (text) {
   const rs = new Readable();
@@ -155,14 +204,17 @@ function createReadStream (text) {
   return rs;
 }
 
-function createHugeFile (delimiter, encoding) {
+function createHugeFile (delimiter, encoding, length) {
+  length = length || 7500;
+
   const filename = path.join(__dirname, 'tmp.txt');
 
   removeHugeFile(filename);
 
-  for (let i = 1; i < 5000; i++) {
-    const text = _.padRight('', i, i);
-    fs.appendFileSync(filename, text + delimiter, {encoding});
+  for (let idx = 1; idx < length; idx++) {
+    const newText = JSON.stringify({idx});
+
+    fs.appendFileSync(filename, newText + delimiter, {encoding});
   }
 
   return filename;
