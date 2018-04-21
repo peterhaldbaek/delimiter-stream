@@ -79,15 +79,3 @@ input.pipe(linestream);
 This will print the contents of `somefile.txt` line by line.
 
 The test suite also shows examples on how to use the stream.
-
-
-## Limitations
-
-Currently the stream only supports one-character delimiters. I will happily
-accept pull requests adding support for mulitple characters.
-
-Empty chunks will be ignored since it is not possible to push an empty string
-in Node unless the stream is in _object mode_
-(<https://nodejs.org/api/stream.html#stream_object_mode>). This stream only
-operates on Strings and Buffers so support for this will likely not be added in
-the future.
