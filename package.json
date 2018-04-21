@@ -1,6 +1,6 @@
 {
   "name": "delimiter-stream",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Streaming chunks based on delimiter",
   "main": "delimiter-stream.js",
   "scripts": {
@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/peterhaldbaek/delimiter-stream",
   "devDependencies": {
-    "chai": "2.3.0",
-    "mocha": "2.2.5"
+    "chai": "4.1.2",
+    "mocha": "5.1.1"
   }
 }
