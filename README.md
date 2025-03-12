@@ -1,6 +1,6 @@
 # delimiter-stream
 
-[![Build Status](https://travis-ci.org/peterhaldbaek/delimiter-stream.svg?branch=master)](https://travis-ci.org/peterhaldbaek/delimiter-stream)
+![Build Status](https://github.com/peterhaldbaek/delimiter-stream/actions/workflows/node.js.yml/badge.svg)
 
 Takes a stream and transforms it into chunks matching the content between
 delimiters. Useful for analyzing big data sets and file streams on the fly.
